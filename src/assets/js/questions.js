@@ -1,5 +1,5 @@
 function fetchQuestions(playerNick) { 
-	return [
+	let questions =  [
 		{
 			id: 1,
 			question: `${playerNick}, qual dessas você destacaria como principal qualidade sua?`,
@@ -610,6 +610,10 @@ function fetchQuestions(playerNick) {
 			]
 		}
 	];
+	
+	let questionsRes;
+	questionsRes = questionsRes = questions.sort(() => Math.random() - 0.5);
+	return questionsRes;
 }
 
 export default fetchQuestions;

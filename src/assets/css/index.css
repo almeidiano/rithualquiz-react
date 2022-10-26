@@ -34,7 +34,7 @@ a, span {
 .main-title {
     display: flex;
     justify-content: center;
-    margin-top: 30px;
+    margin: 15px;
 }
 .title {
     color: #fb4cec;
