@@ -4,38 +4,28 @@ import { useNavigate } from "react-router-dom";
 import fetchQuestions from '../assets/js/questions.js';
 
 function FetchQuestionsAndAnswers() {
-  const [buttonList, setButtonList] = useState(null);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [question, setQuestion] = useState('');
+  const [currentQuestionCount, setCurrentQuestionCount] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
   const [playerAttributes, setPlayerAttributes] = useState({intro:0,charisma:0,extro:0,intellectual:0});
   let navigate = useNavigate();
 
     useEffect(() => {
-      async function getAnswers() {
+      async function setCurrentQuestionFunction() {
         return new Promise((resolve, reject) => {
-          if(fetchQuestions()[currentQuestion]) {
-            resolve(setButtonList(fetchQuestions(localStorage.getItem('playerNick'))[currentQuestion]));
-          }
-        })
-      }
-
-      async function getQuestions() {
-        return new Promise((resolve, reject) => {
-          if(fetchQuestions()[currentQuestion]) {
-            resolve(setQuestion(fetchQuestions(localStorage.getItem('playerNick'))[currentQuestion].question));
+          if(fetchQuestions()[currentQuestionCount]) {
+            resolve(setCurrentQuestion(fetchQuestions(localStorage.getItem('playerNick'))[currentQuestionCount]));
           }else{
             reject(finishQuiz(), navigate('/Result'));
           }
         })
       }
 
-      getQuestions();
-      getAnswers();
+      setCurrentQuestionFunction();
       console.log(playerAttributes);
-    }, [currentQuestion, playerAttributes])
+    }, [currentQuestionCount, playerAttributes])
 
     const applyQuestion = (btn) => {
-      setCurrentQuestion(currentQuestion + 1);
+      setCurrentQuestionCount(currentQuestionCount + 1);
       sumPlayerAttributes(btn.currentTarget);
     }
 
@@ -58,9 +48,9 @@ function FetchQuestionsAndAnswers() {
         let charEffects = new Object();
         charEffects[dataChar] = dataEffect;
 
-        if(buttonList.typeOf == "dynamic") {
-            let focus = buttonList.focus;
-            let opposite = buttonList.opposite;
+        if(currentQuestion.typeOf == "dynamic") {
+            let focus = currentQuestion.focus;
+            let opposite = currentQuestion.opposite;
     
             switch(dataChar) {
                 case focus:
@@ -91,13 +81,8 @@ function FetchQuestionsAndAnswers() {
 
   return (
     <div>
-      {buttonList && question && <div><div className={quizStyle.question}><span className="highlight">{currentQuestion + 1}.</span><span className={quizStyle.question_text}>{question}</span></div>
-        <div className={quizStyle.btnsArea}>
-          {buttonList && buttonList.answers.map((item) => (
-            <button onClick={applyQuestion} key={item.id} data-effect={item.effect} data-char={item.characteristic} className='btn'>{item.answer}</button>
-          ))}
-        </div>
-      </div>}
+      {currentQuestion && <div className={quizStyle.question}><span className="highlight">{currentQuestionCount + 1}.</span><span className={quizStyle.question_text}>{currentQuestion.question}</span></div>}
+      <div className={quizStyle.btnsArea}>{currentQuestion && currentQuestion.answers.map((item)=> ( <button onClick={applyQuestion}key={item.id}data-effect={item.effect}data-char={item.characteristic}className='btn'>{item.answer}</button> ))}</div>
     </div>
   )
 }
