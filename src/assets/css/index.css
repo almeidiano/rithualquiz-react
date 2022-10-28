@@ -38,7 +38,7 @@ a, span {
 }
 .title {
     color: #fb4cec;
-    padding: 15px 0px;
+    padding-top: 15px;
 }
 .desc-text, .desc-title {
     text-align: center;

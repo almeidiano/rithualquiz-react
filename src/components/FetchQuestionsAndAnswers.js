@@ -48,35 +48,11 @@ function FetchQuestionsAndAnswers() {
         let charEffects = new Object();
         charEffects[dataChar] = dataEffect;
 
-        if(currentQuestion.typeOf == "dynamic") {
-            let focus = currentQuestion.focus;
-            let opposite = currentQuestion.opposite;
-    
-            switch(dataChar) {
-                case focus:
-                Object.keys(playerAttributes).forEach(key => {
-                    if(Object.keys(charEffects) == key){
-                      setPlayerAttributes(playerAttributes => ({...playerAttributes, [focus]: playerAttributes[focus] += dataEffect}));
-                      setPlayerAttributes(playerAttributes => ({...playerAttributes, [opposite]: playerAttributes[opposite] -= dataEffect}));
-                    }
-                })
-                break;
-                case opposite:
-                Object.keys(playerAttributes).forEach(key => {
-                    if(Object.keys(charEffects) == key){
-                      setPlayerAttributes(playerAttributes => ({...playerAttributes, [focus]: playerAttributes[focus] += dataEffect}));
-                      setPlayerAttributes(playerAttributes => ({...playerAttributes, [opposite]: playerAttributes[opposite] -= dataEffect}));
-                    }
-                })
-                break;
-            }
-        }else{
-          Object.keys(playerAttributes).forEach(key => {
-            if(Object.keys(charEffects) == key){
-                setPlayerAttributes(playerAttributes => ({...playerAttributes, [key]: playerAttributes[key] += dataEffect}));
-            }
-          })
-        }
+        Object.keys(playerAttributes).forEach(key => {
+          if(Object.keys(charEffects) == key){
+              setPlayerAttributes(playerAttributes => ({...playerAttributes, [key]: playerAttributes[key] += dataEffect}));
+          }
+        })
     }
 
   return (

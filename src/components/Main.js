@@ -17,7 +17,7 @@ import quizStyle from '../assets/css/quiz.module.css';
 const Main = ({mainTitle, mainContent, target, width, centered, dynamicWidth}) => {
 
   const RenderContent = ({title, desc}) => {
-    return (<div className="mainContent">{title && <div className="desc-title title">{title}</div>}<div className="desc-text">{desc}</div></div>)
+    return (<div className="mainContent">{title && <div className="desc-title title"><h3 class="highlight">{title}</h3></div>}<div className="desc-text">{desc}</div></div>)
   }
 
   const [message, setMessage] = useState('');
